@@ -40,7 +40,7 @@ jobs:
 
       - name: Backup current website
         run: |
-          ssh -i ~/.ssh/lighthouse_deploy_key \
+          ssh -n -T -i ~/.ssh/lighthouse_deploy_key \
             "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
             'set -e
              TS=$(date +%Y%m%d_%H%M%S)
@@ -56,16 +56,16 @@ jobs:
           split -b 60000 release.tar.gz.b64 release-part-
           REMOTE_B64="/tmp/official-website-${{ github.run_id }}.tar.gz.b64"
           REMOTE_PACKAGE="/tmp/official-website-${{ github.run_id }}.tar.gz"
-          ssh -i ~/.ssh/lighthouse_deploy_key \
+          ssh -n -T -i ~/.ssh/lighthouse_deploy_key \
             "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
             "rm -f '$REMOTE_B64' '$REMOTE_PACKAGE'"
           for PART in release-part-*; do
             CHUNK="$(cat "$PART")"
-            ssh -i ~/.ssh/lighthouse_deploy_key \
+            ssh -n -T -i ~/.ssh/lighthouse_deploy_key \
               "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
               "printf '%s' '$CHUNK' >> '$REMOTE_B64'"
           done
-          ssh -i ~/.ssh/lighthouse_deploy_key \
+          ssh -n -T -i ~/.ssh/lighthouse_deploy_key \
             "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
             "set -e
              TMP_DIR=\$(mktemp -d)
@@ -77,6 +77,6 @@ jobs:
 
       - name: Health check
         run: |
-          ssh -i ~/.ssh/lighthouse_deploy_key \
+          ssh -n -T -i ~/.ssh/lighthouse_deploy_key \
             "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
             'curl -I http://127.0.0.1/ || true'
