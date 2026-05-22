@@ -53,7 +53,7 @@ jobs:
         run: |
           tar -czf release.tar.gz -C release .
           base64 -w 0 release.tar.gz > release.tar.gz.b64
-          split -b 12000 release.tar.gz.b64 release-part-
+          split -b 60000 release.tar.gz.b64 release-part-
           REMOTE_B64="/tmp/official-website-${{ github.run_id }}.tar.gz.b64"
           REMOTE_PACKAGE="/tmp/official-website-${{ github.run_id }}.tar.gz"
           ssh -i ~/.ssh/lighthouse_deploy_key \
