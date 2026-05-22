@@ -53,11 +53,9 @@ jobs:
         run: |
           tar -czf release.tar.gz -C release .
           REMOTE_PACKAGE="/tmp/official-website-${{ github.run_id }}.tar.gz"
-          scp -i ~/.ssh/lighthouse_deploy_key \
-            -o ConnectTimeout=20 \
-            -o ServerAliveInterval=15 \
-            -o ServerAliveCountMax=4 \
-            release.tar.gz "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}:$REMOTE_PACKAGE"
+          cat release.tar.gz | ssh -i ~/.ssh/lighthouse_deploy_key \
+            "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
+            "cat > '$REMOTE_PACKAGE'"
           ssh -i ~/.ssh/lighthouse_deploy_key \
             "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
             "set -e
