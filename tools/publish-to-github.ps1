@@ -19,10 +19,15 @@ if (!(Test-Path $KeyPath)) {
   throw "Deploy private key was not found at $KeyPath"
 }
 
+$originalErrorActionPreference = $ErrorActionPreference
 & $Gh auth status
 
+$ErrorActionPreference = "Continue"
 $remote = & $Git remote get-url origin 2>$null
-if (!$remote) {
+$remoteExitCode = $LASTEXITCODE
+$ErrorActionPreference = $originalErrorActionPreference
+
+if ($remoteExitCode -ne 0 -or !$remote) {
   & $Gh repo create $RepoName --private --source . --remote origin --push
 } else {
   & $Git push -u origin main
