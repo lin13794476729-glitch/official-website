@@ -51,23 +51,29 @@ jobs:
 
       - name: Upload website
         run: |
+          tar -czf release.tar.gz -C release .
+          base64 -w 0 release.tar.gz > release.tar.gz.b64
+          split -b 12000 release.tar.gz.b64 release-part-
+          REMOTE_B64="/tmp/official-website-${{ github.run_id }}.tar.gz.b64"
+          REMOTE_PACKAGE="/tmp/official-website-${{ github.run_id }}.tar.gz"
+          ssh -i ~/.ssh/lighthouse_deploy_key \
+            "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
+            "rm -f '$REMOTE_B64' '$REMOTE_PACKAGE'"
+          for PART in release-part-*; do
+            CHUNK="$(cat "$PART")"
+            ssh -i ~/.ssh/lighthouse_deploy_key \
+              "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
+              "printf '%s' '$CHUNK' >> '$REMOTE_B64'"
+          done
           ssh -i ~/.ssh/lighthouse_deploy_key \
             "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
             "set -e
-             REPO_DIR=/home/deploy/official-website
-             export GIT_SSH_COMMAND='ssh -i /home/deploy/.ssh/official_website_repo -o IdentitiesOnly=yes -o StrictHostKeyChecking=no'
-             if [ ! -d \"\$REPO_DIR/.git\" ]; then
-               git clone git@github.com:${{ github.repository }}.git \"\$REPO_DIR\"
-             fi
-             git -C \"\$REPO_DIR\" fetch origin main
-             git -C \"\$REPO_DIR\" reset --hard ${{ github.sha }}
-             SRC_DIR=\"\$REPO_DIR\"
-             for ITEM in .htaccess index.html index.php styles.css script.js assets; do
-               if [ -e \"\$SRC_DIR/\$ITEM\" ]; then
-                 cp -R \"\$SRC_DIR/\$ITEM\" /home/www/htdocs/
-               fi
-             done
-             find /home/www/htdocs -type d -exec chmod g+rwX {} \\;"
+             TMP_DIR=\$(mktemp -d)
+             base64 -d '$REMOTE_B64' > '$REMOTE_PACKAGE'
+             tar -xzf '$REMOTE_PACKAGE' -C \"\$TMP_DIR\"
+             cp -R \"\$TMP_DIR\"/. /home/www/htdocs/
+             find /home/www/htdocs -type d -exec chmod g+rwX {} \\;
+             rm -rf \"\$TMP_DIR\" '$REMOTE_B64' '$REMOTE_PACKAGE'"
 
       - name: Health check
         run: |
