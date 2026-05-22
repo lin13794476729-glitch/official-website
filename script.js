@@ -96,7 +96,14 @@ const renderCatalogPanel = (sections, activeCategory) => {
     .slice(0, 18)
     .map((goods) => {
       const desc = goods.desc || "小程序后台同步商品，规格、库存和价格以小程序或电话咨询为准。";
-      const priceText = goods.price ? `小程序价 ¥${goods.price}` : "规格咨询";
+      const priceText = goods.price ? `小程序同步 ¥${goods.price}` : "规格咨询";
+      const tags = Array.isArray(goods.tags) ? goods.tags.filter(Boolean).slice(0, 2) : [];
+      const tagHtml = [
+        ...tags,
+        goods.type === "custom" ? "可选规格" : "上架商品"
+      ]
+        .map((tag) => `<b>${escapeHtml(tag)}</b>`)
+        .join("");
 
       return `
         <article class="catalog-item">
@@ -105,6 +112,7 @@ const renderCatalogPanel = (sections, activeCategory) => {
             <span>${escapeHtml(priceText)}</span>
             <h4>${escapeHtml(goods.name || "深悦胜商品")}</h4>
             <p>${escapeHtml(desc)}</p>
+            <div class="catalog-labels">${tagHtml}</div>
             <a href="${miniProgramLink}">进入小程序查看</a>
           </div>
         </article>
@@ -115,10 +123,21 @@ const renderCatalogPanel = (sections, activeCategory) => {
   return `
     <div class="catalog-heading">
       <h3>${escapeHtml(section.category)}</h3>
-      <p>同步 ${section.goodsList.length} 个上架商品</p>
+      <p>${escapeHtml(getCategoryIntro(section.category))} 当前同步 ${section.goodsList.length} 个上架商品。</p>
     </div>
     <div class="catalog-products">${items}</div>
   `;
+};
+
+const getCategoryIntro = (category) => {
+  const introMap = {
+    双人轻享: "适合少量尝鲜、双人晚餐和日常刺身加餐。",
+    家庭轻宴: "适合家庭聚餐、朋友小聚和周末餐桌。",
+    宴请拼盘: "适合多人宴请、节日聚会和企业礼赠场景。",
+    单品加点: "适合作为刺身拼盘、日料餐桌和轻食套餐的补充。"
+  };
+
+  return introMap[category] || "根据小程序后台分类同步展示。";
 };
 
 const renderCatalog = (sections) => {

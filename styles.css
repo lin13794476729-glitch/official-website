@@ -531,22 +531,22 @@ address {
 }
 
 .catalog {
-  background: #f7f3ec;
+  background:
+    linear-gradient(180deg, #f7f3ec 0%, #fbfbf8 100%);
 }
 
 .catalog-intro {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px;
-  margin-bottom: 26px;
-  border: 1px solid rgba(168, 125, 60, 0.22);
-  background: rgba(168, 125, 60, 0.22);
+  gap: 14px;
+  margin-bottom: 30px;
 }
 
 .catalog-intro article {
-  min-height: 176px;
+  min-height: 188px;
   padding: 24px;
-  background: #fffdf8;
+  border: 1px solid rgba(168, 125, 60, 0.22);
+  background: rgba(255, 253, 248, 0.72);
 }
 
 .catalog-intro span {
@@ -569,11 +569,10 @@ address {
 }
 
 .catalog-shell {
-  display: grid;
-  grid-template-columns: minmax(180px, 0.28fr) minmax(0, 1fr);
-  min-height: 420px;
+  min-height: 520px;
   border: 1px solid rgba(168, 125, 60, 0.22);
   background: var(--white);
+  box-shadow: 0 22px 64px rgba(17, 24, 32, 0.07);
 }
 
 .catalog-state {
@@ -584,17 +583,20 @@ address {
 }
 
 .catalog-menu {
-  border-right: 1px solid var(--line);
-  background: #fbfaf6;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 20px 22px;
+  border-bottom: 1px solid var(--line);
+  background: #fffdf8;
 }
 
 .catalog-menu button {
   display: grid;
-  width: 100%;
   gap: 4px;
-  padding: 18px 20px;
-  border: 0;
-  border-bottom: 1px solid var(--line);
+  min-width: 148px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
   background: transparent;
   color: var(--muted);
   font: inherit;
@@ -603,8 +605,9 @@ address {
 }
 
 .catalog-menu button.is-active {
-  background: var(--white);
+  border-color: var(--deep);
   color: var(--ink);
+  background: var(--white);
 }
 
 .catalog-menu strong {
@@ -619,20 +622,20 @@ address {
 }
 
 .catalog-panel {
-  padding: 26px;
+  padding: clamp(22px, 3vw, 38px);
 }
 
 .catalog-heading {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(240px, 0.72fr) minmax(280px, 1fr);
+  gap: clamp(22px, 4vw, 56px);
   align-items: end;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 28px;
 }
 
 .catalog-heading h3 {
   margin: 0;
-  font-size: clamp(28px, 3vw, 44px);
+  font-size: clamp(34px, 4vw, 62px);
   font-weight: 560;
   line-height: 1.1;
 }
@@ -640,17 +643,28 @@ address {
 .catalog-heading p {
   margin: 0;
   color: var(--muted);
+  font-size: 16px;
 }
 
 .catalog-products {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
 }
 
 .catalog-item {
   border: 1px solid var(--line);
   background: var(--white);
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.catalog-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(168, 125, 60, 0.34);
+  box-shadow: 0 16px 42px rgba(17, 24, 32, 0.08);
 }
 
 .catalog-item img {
@@ -664,13 +678,28 @@ address {
 .catalog-item-body {
   display: grid;
   gap: 10px;
-  padding: 16px;
+  padding: 18px;
 }
 
 .catalog-item-body span {
   color: var(--gold);
   font-size: 12px;
   font-weight: 700;
+}
+
+.catalog-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.catalog-labels b {
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  color: #52606b;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 .catalog-item h4 {
@@ -924,25 +953,8 @@ address a {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .catalog-shell {
-    grid-template-columns: 1fr;
-  }
-
-  .catalog-menu {
-    display: flex;
-    overflow-x: auto;
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .catalog-menu button {
-    min-width: 150px;
-    border-right: 1px solid var(--line);
-    border-bottom: 0;
-  }
-
   .catalog-products {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .catalog-intro {
@@ -1160,7 +1172,7 @@ address a {
   }
 
   .catalog-heading {
-    display: grid;
+    grid-template-columns: 1fr;
   }
 
   .catalog-products {
