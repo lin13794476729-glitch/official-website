@@ -36,5 +36,8 @@ uploads/
 config/
 电商/
 install_goods_redesign.ps1
+apply_left_menu_english.ps1
+fix_left_menu_english_index.ps1
+run_left_menu_english.bat
 *.wxml
 *.wxss
