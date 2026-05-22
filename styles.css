@@ -541,6 +541,55 @@ address {
   color: #fff;
 }
 
+.buying-guide {
+  background: #f8f8f3;
+}
+
+.guide-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid var(--line);
+  background: var(--white);
+}
+
+.guide-grid article {
+  min-height: 300px;
+  padding: 34px;
+  border-right: 1px solid var(--line);
+}
+
+.guide-grid article:last-child {
+  border-right: 0;
+}
+
+.guide-grid span {
+  display: inline-flex;
+  margin-bottom: 62px;
+  color: var(--gold);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.guide-grid h3 {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 560;
+  line-height: 1.16;
+}
+
+.guide-grid p {
+  margin: 18px 0 0;
+  color: var(--muted);
+}
+
+.guide-grid strong,
+.guide-grid a {
+  display: inline-flex;
+  margin-top: 28px;
+  color: var(--sea);
+  font-weight: 700;
+}
+
 .contact-band {
   display: grid;
   grid-template-columns: minmax(280px, 1fr) auto;
@@ -580,6 +629,24 @@ address a {
 @media (max-width: 1100px) {
   .product-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .guide-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .guide-grid article {
+    min-height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .guide-grid article:last-child {
+    border-bottom: 0;
+  }
+
+  .guide-grid span {
+    margin-bottom: 38px;
   }
 
   .quick-entry {
