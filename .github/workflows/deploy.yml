@@ -34,7 +34,11 @@ jobs:
             --include='/index.php' \
             --include='/styles.css' \
             --include='/script.js' \
-            --include='/assets/***' \
+            --include='/assets/' \
+            --include='/assets/editorial/***' \
+            --include='/assets/brand/' \
+            --include='/assets/brand/favicon.png' \
+            --include='/assets/brand/logo-shenyuesheng-web-transparent.png' \
             --exclude='*' \
             ./ release/
 
