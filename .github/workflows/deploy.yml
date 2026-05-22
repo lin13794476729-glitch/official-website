@@ -51,7 +51,12 @@ jobs:
 
       - name: Upload website
         run: |
-          rsync -az \
+          rsync -rltz \
+            --no-owner \
+            --no-group \
+            --no-perms \
+            --omit-dir-times \
+            --chmod=D775,F664 \
             --exclude '/admin/***' \
             --exclude '/api/***' \
             --exclude '/data/***' \
