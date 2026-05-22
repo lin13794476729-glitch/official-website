@@ -67,36 +67,16 @@ a {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  width: 178px;
   min-width: 0;
 }
 
-.brand-mark {
-  display: grid;
-  width: 42px;
-  height: 42px;
-  place-items: center;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  font-weight: 700;
-}
-
-.brand strong,
-.brand small {
-  display: block;
-  white-space: nowrap;
-}
-
-.brand strong {
-  font-size: 18px;
-  line-height: 1.1;
-}
-
-.brand small {
-  margin-top: 2px;
-  color: var(--muted);
-  font-size: 11px;
-  letter-spacing: 0;
+.brand-logo {
+  width: 100%;
+  height: auto;
+  max-height: 48px;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .desktop-nav {
@@ -712,6 +692,14 @@ address {
   background: var(--white);
 }
 
+.footer-brand {
+  width: 220px;
+}
+
+.footer-logo {
+  max-height: 70px;
+}
+
 address {
   display: grid;
   gap: 10px;
@@ -721,6 +709,36 @@ address {
 
 address a {
   color: var(--sea);
+}
+
+.floating-cta {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 35;
+  display: grid;
+  gap: 8px;
+}
+
+.floating-cta a {
+  display: inline-flex;
+  min-width: 104px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(16, 35, 51, 0.16);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 30px rgba(17, 24, 32, 0.12);
+  color: var(--deep);
+  font-size: 14px;
+  font-weight: 700;
+  backdrop-filter: blur(14px);
+}
+
+.floating-cta a:first-child {
+  border-color: var(--deep);
+  background: var(--deep);
+  color: var(--white);
 }
 
 @media (max-width: 1100px) {
@@ -843,22 +861,17 @@ address a {
 }
 
 @media (max-width: 560px) {
+  body {
+    padding-bottom: 74px;
+  }
+
   .site-header {
     height: 66px;
     padding-inline: 16px;
   }
 
-  .brand-mark {
-    width: 38px;
-    height: 38px;
-  }
-
-  .brand strong {
-    font-size: 16px;
-  }
-
-  .brand small {
-    font-size: 10px;
+  .brand {
+    width: 142px;
   }
 
   .mobile-nav {
@@ -963,5 +976,22 @@ address a {
   .site-footer {
     display: grid;
     padding: 42px 20px;
+  }
+
+  .floating-cta {
+    right: 0;
+    bottom: 0;
+    left: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    padding: 10px;
+    border-top: 1px solid var(--line);
+    background: rgba(251, 251, 248, 0.94);
+    backdrop-filter: blur(16px);
+  }
+
+  .floating-cta a {
+    min-width: 0;
+    box-shadow: none;
   }
 }

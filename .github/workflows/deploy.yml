@@ -51,18 +51,23 @@ jobs:
 
       - name: Upload website
         run: |
-          tar -czf release.tar.gz -C release .
-          REMOTE_PACKAGE="/tmp/official-website-${{ github.run_id }}.tar.gz"
-          cat release.tar.gz | ssh -i ~/.ssh/lighthouse_deploy_key \
-            "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
-            "cat > '$REMOTE_PACKAGE'"
           ssh -i ~/.ssh/lighthouse_deploy_key \
             "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
             "set -e
-             TMP_DIR=\$(mktemp -d)
-             tar -xzf '$REMOTE_PACKAGE' -C \"\$TMP_DIR\"
-             cp -R \"\$TMP_DIR\"/. /home/www/htdocs/
-             rm -rf \"\$TMP_DIR\" '$REMOTE_PACKAGE'"
+             REPO_DIR=/home/deploy/official-website
+             export GIT_SSH_COMMAND='ssh -i /home/deploy/.ssh/official_website_repo -o IdentitiesOnly=yes -o StrictHostKeyChecking=no'
+             if [ ! -d \"\$REPO_DIR/.git\" ]; then
+               git clone git@github.com:${{ github.repository }}.git \"\$REPO_DIR\"
+             fi
+             git -C \"\$REPO_DIR\" fetch origin main
+             git -C \"\$REPO_DIR\" reset --hard ${{ github.sha }}
+             SRC_DIR=\"\$REPO_DIR\"
+             for ITEM in .htaccess index.html index.php styles.css script.js assets; do
+               if [ -e \"\$SRC_DIR/\$ITEM\" ]; then
+                 cp -R \"\$SRC_DIR/\$ITEM\" /home/www/htdocs/
+               fi
+             done
+             find /home/www/htdocs -type d -exec chmod g+rwX {} \\;"
 
       - name: Health check
         run: |
