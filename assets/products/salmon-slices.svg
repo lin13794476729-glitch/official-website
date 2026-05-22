@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 675" role="img" aria-label="三文鱼料理切片">
+  <rect width="900" height="675" fill="#f9faf9"/>
+  <rect x="135" y="112" width="630" height="452" rx="22" fill="#263640"/>
+  <g transform="translate(206 160)">
+    <path d="M0 245c70-145 190-220 360-225 86-3 136 30 148 100 16 90-39 162-166 217-142 61-260 30-342-92z" fill="#ed6840"/>
+    <path d="M66 233c85-50 194-75 327-77" stroke="#ffd5c3" stroke-width="16" fill="none" opacity=".75"/>
+    <path d="M105 285c86-38 176-54 270-49" stroke="#ffd5c3" stroke-width="13" fill="none" opacity=".7"/>
+  </g>
+  <circle cx="690" cy="482" r="34" fill="#b98a42"/>
+  <text x="94" y="88" fill="#b98a42" font-family="Arial, sans-serif" font-size="20" font-weight="700">SHENYUESHENG</text>
+</svg>

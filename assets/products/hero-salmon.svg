@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="深悦胜三文鱼产品图">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#08131d"/>
+      <stop offset="1" stop-color="#173240"/>
+    </linearGradient>
+    <linearGradient id="fish" x1="0" x2="1">
+      <stop offset="0" stop-color="#ff8f62"/>
+      <stop offset="1" stop-color="#e75638"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+  <ellipse cx="980" cy="560" rx="520" ry="210" fill="#061018" opacity=".72"/>
+  <path d="M350 530c220-250 590-270 860-110 110 65 210 90 290 80-130 150-360 210-660 180-230-24-390-78-490-150z" fill="url(#fish)"/>
+  <path d="M1190 420l210-110-82 176 116 138-230-50z" fill="#d94f35"/>
+  <path d="M405 525c205-70 500-75 790-15" fill="none" stroke="#ffd3bd" stroke-width="24" opacity=".76"/>
+  <path d="M500 600c170-45 385-48 650-8" fill="none" stroke="#ffd3bd" stroke-width="18" opacity=".58"/>
+  <circle cx="470" cy="500" r="20" fill="#101923"/>
+  <path d="M230 765h740" stroke="#f6fbfc" stroke-width="2" opacity=".18"/>
+  <text x="230" y="812" fill="#f6fbfc" font-family="Arial, sans-serif" font-size="54" font-weight="700">SHENYUESHENG</text>
+  <text x="230" y="870" fill="#b98a42" font-family="Arial, sans-serif" font-size="28">Fresh Seafood Selection</text>
+</svg>

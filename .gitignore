@@ -1,0 +1,40 @@
+# Local secrets and temporary server keys
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+codex_temp_server_key*
+*_server_key*
+
+# Backups and deployment packages
+*.tar
+*.tar.gz
+*.zip
+*_backup*
+backups/
+*.bak
+*.log
+
+# Local/editor noise
+.DS_Store
+Thumbs.db
+.env
+.env.*
+!.env.example
+
+# Dependencies/build caches
+node_modules/
+dist/
+build/
+.cache/
+
+# Server/backend areas that should not be committed to the website deploy repo
+admin/
+api/
+data/
+uploads/
+config/
+电商/
+install_goods_redesign.ps1
+*.wxml
+*.wxss

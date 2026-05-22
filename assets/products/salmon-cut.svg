@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 675" role="img" aria-label="三文鱼厚切鱼块">
+  <rect width="900" height="675" fill="#eef4f5"/>
+  <rect x="120" y="150" width="270" height="350" rx="20" fill="#f17143" transform="rotate(-8 255 325)"/>
+  <rect x="390" y="140" width="270" height="360" rx="20" fill="#f47a4b" transform="rotate(7 525 320)"/>
+  <g stroke="#ffd7c7" stroke-width="13" opacity=".78">
+    <path d="M165 210c85 44 148 118 187 220"/>
+    <path d="M230 175c80 70 124 157 134 262"/>
+    <path d="M438 190c79 50 138 132 176 246"/>
+    <path d="M510 160c75 67 117 156 126 266"/>
+  </g>
+  <ellipse cx="454" cy="530" rx="330" ry="42" fill="#10202b" opacity=".12"/>
+  <text x="80" y="92" fill="#b98a42" font-family="Arial, sans-serif" font-size="20" font-weight="700">SHENYUESHENG</text>
+</svg>

@@ -1,0 +1,68 @@
+name: Deploy website
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-website
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare SSH key
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.LIGHTHOUSE_SSH_KEY }}" > ~/.ssh/lighthouse_deploy_key
+          chmod 600 ~/.ssh/lighthouse_deploy_key
+          ssh-keyscan -H "${{ secrets.LIGHTHOUSE_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Prepare release files
+        run: |
+          mkdir -p release
+          rsync -a \
+            --include='/.htaccess' \
+            --include='/index.html' \
+            --include='/index.php' \
+            --include='/styles.css' \
+            --include='/script.js' \
+            --include='/assets/***' \
+            --exclude='*' \
+            ./ release/
+
+      - name: Backup current website
+        run: |
+          ssh -i ~/.ssh/lighthouse_deploy_key \
+            "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
+            'set -e
+             TS=$(date +%Y%m%d_%H%M%S)
+             mkdir -p /home/www/backups
+             if [ -d /home/www/htdocs ]; then
+               cp -a --no-preserve=ownership /home/www/htdocs /home/www/backups/htdocs_$TS
+             fi'
+
+      - name: Upload website
+        run: |
+          rsync -az \
+            --exclude '/admin/***' \
+            --exclude '/api/***' \
+            --exclude '/data/***' \
+            --exclude '/uploads/***' \
+            --exclude '/config/***' \
+            --exclude '*.sql' \
+            -e "ssh -i ~/.ssh/lighthouse_deploy_key" \
+            release/ "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}:/home/www/htdocs/"
+
+      - name: Health check
+        run: |
+          ssh -i ~/.ssh/lighthouse_deploy_key \
+            "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
+            'curl -I http://127.0.0.1/ || true'

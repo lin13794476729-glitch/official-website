@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 675" role="img" aria-label="新西兰帝王鲑三文鱼整条">
+  <rect width="900" height="675" fill="#eef4f5"/>
+  <rect x="62" y="70" width="776" height="535" rx="10" fill="#fff" stroke="#dfe5eb"/>
+  <path d="M145 360c115-145 330-185 505-95 70 36 132 43 205 23-56 90-165 155-332 171-168 15-299-18-378-99z" fill="#d8e0e2"/>
+  <path d="M565 265c92-38 173-74 245-110l-53 126 72 100-212-52z" fill="#bfcbd0"/>
+  <path d="M202 356c108-53 255-75 444-53" fill="none" stroke="#f8fbfc" stroke-width="22" opacity=".85"/>
+  <circle cx="230" cy="330" r="17" fill="#10202b"/>
+  <text x="92" y="105" fill="#b98a42" font-family="Arial, sans-serif" font-size="20" font-weight="700">SHENYUESHENG</text>
+  <text x="92" y="548" fill="#101923" font-family="Arial, sans-serif" font-size="34" font-weight="700">KING SALMON</text>
+  <text x="92" y="586" fill="#66717f" font-family="Arial, sans-serif" font-size="20">Whole Fish Selection</text>
+</svg>

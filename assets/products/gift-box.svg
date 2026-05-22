@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="675" viewBox="0 0 900 675">
+  <rect width="900" height="675" fill="#f8f5ef"/>
+  <rect x="150" y="135" width="600" height="390" rx="28" fill="#101923"/>
+  <rect x="150" y="135" width="600" height="70" rx="28" fill="#b98a42"/>
+  <rect x="198" y="230" width="180" height="215" rx="18" fill="#ef6c43"/>
+  <rect x="410" y="230" width="180" height="215" rx="18" fill="#ef6c43"/>
+  <circle cx="650" cy="338" r="62" fill="#e8f0ef"/>
+  <path d="M235 270 C280 310, 318 360, 348 418" fill="none" stroke="#ffd5c3" stroke-width="12"/>
+  <path d="M448 270 C492 310, 530 360, 560 418" fill="none" stroke="#ffd5c3" stroke-width="12"/>
+  <text x="205" y="180" fill="#ffffff" font-family="Arial, sans-serif" font-size="25" font-weight="700">SHENYUESHENG GIFT</text>
+</svg>

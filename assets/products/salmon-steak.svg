@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 675" role="img" aria-label="冰鲜三文鱼鱼排">
+  <rect width="900" height="675" fill="#f7f4ef"/>
+  <circle cx="450" cy="342" r="248" fill="#ffffff"/>
+  <path d="M240 355c80-120 237-156 390-82 86 42 110 133 45 211-98 118-312 105-435-9-38-35-38-63 0-120z" fill="#f36b43"/>
+  <path d="M305 331c78-30 183-25 318 18" fill="none" stroke="#ffd6c4" stroke-width="18" opacity=".8"/>
+  <path d="M278 418c95-20 207-13 333 21" fill="none" stroke="#ffd6c4" stroke-width="14" opacity=".72"/>
+  <circle cx="450" cy="350" r="70" fill="#f7f4ef" opacity=".75"/>
+  <text x="70" y="88" fill="#b98a42" font-family="Arial, sans-serif" font-size="20" font-weight="700">SHENYUESHENG</text>
+  <text x="70" y="590" fill="#101923" font-family="Arial, sans-serif" font-size="30" font-weight="700">SALMON STEAK</text>
+</svg>
