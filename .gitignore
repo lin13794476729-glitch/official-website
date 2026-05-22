@@ -41,3 +41,6 @@ fix_left_menu_english_index.ps1
 run_left_menu_english.bat
 *.wxml
 *.wxss
+index_home_articles.ts
+mine-redesign.ts
+tab-order-redesign.ts

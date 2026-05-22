@@ -25,23 +25,6 @@ jobs:
           chmod 600 ~/.ssh/lighthouse_deploy_key
           ssh-keyscan -H "${{ secrets.LIGHTHOUSE_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Prepare release files
-        run: |
-          mkdir -p release
-          rsync -a \
-            --include='/.htaccess' \
-            --include='/index.html' \
-            --include='/index.php' \
-            --include='/styles.css' \
-            --include='/script.js' \
-            --include='/assets/' \
-            --include='/assets/editorial/***' \
-            --include='/assets/brand/' \
-            --include='/assets/brand/favicon.png' \
-            --include='/assets/brand/logo-shenyuesheng-web-transparent.png' \
-            --exclude='*' \
-            ./ release/
-
       - name: Backup current website
         run: |
           ssh -n -T -i ~/.ssh/lighthouse_deploy_key \
@@ -55,29 +38,22 @@ jobs:
 
       - name: Upload website
         run: |
-          tar -czf release.tar.gz -C release .
-          base64 -w 0 release.tar.gz > release.tar.gz.b64
-          split -b 60000 release.tar.gz.b64 release-part-
-          REMOTE_B64="/tmp/official-website-${{ github.run_id }}.tar.gz.b64"
           REMOTE_PACKAGE="/tmp/official-website-${{ github.run_id }}.tar.gz"
           ssh -n -T -i ~/.ssh/lighthouse_deploy_key \
             "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
-            "rm -f '$REMOTE_B64' '$REMOTE_PACKAGE'"
-          for PART in release-part-*; do
-            CHUNK="$(cat "$PART")"
-            ssh -n -T -i ~/.ssh/lighthouse_deploy_key \
-              "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
-              "printf '%s' '$CHUNK' >> '$REMOTE_B64'"
-          done
-          ssh -n -T -i ~/.ssh/lighthouse_deploy_key \
-            "${{ secrets.LIGHTHOUSE_USER }}@${{ secrets.LIGHTHOUSE_HOST }}" \
             "set -e
+             rm -f '$REMOTE_PACKAGE'
              TMP_DIR=\$(mktemp -d)
-             base64 -d '$REMOTE_B64' > '$REMOTE_PACKAGE'
+             curl -fsSL 'https://codeload.github.com/${{ github.repository }}/tar.gz/${{ github.sha }}' -o '$REMOTE_PACKAGE'
              tar -xzf '$REMOTE_PACKAGE' -C \"\$TMP_DIR\"
-             cp -R \"\$TMP_DIR\"/. /home/www/htdocs/
+             SRC_DIR=\$(find \"\$TMP_DIR\" -mindepth 1 -maxdepth 1 -type d | head -n 1)
+             for ITEM in .htaccess index.html index.php robots.txt sitemap.xml styles.css script.js assets; do
+               if [ -e \"\$SRC_DIR/\$ITEM\" ]; then
+                 cp -R \"\$SRC_DIR/\$ITEM\" /home/www/htdocs/
+               fi
+             done
              find /home/www/htdocs -type d -exec chmod g+rwX {} \\;
-             rm -rf \"\$TMP_DIR\" '$REMOTE_B64' '$REMOTE_PACKAGE'"
+             rm -rf \"\$TMP_DIR\" '$REMOTE_PACKAGE'"
 
       - name: Health check
         run: |
