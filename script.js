@@ -95,12 +95,12 @@ const renderCatalogPanel = (sections, activeCategory) => {
   const items = section.goodsList
     .slice(0, 18)
     .map((goods) => {
-      const desc = goods.desc || "小程序后台同步商品，规格、库存和价格以小程序或电话咨询为准。";
-      const priceText = goods.price ? `小程序同步 ¥${goods.price}` : "规格咨询";
+      const desc = goods.desc || "规格、库存和配送方式可进入微信小程序查看，或电话咨询确认。";
+      const priceText = goods.price ? `参考价 ¥${goods.price}` : "规格咨询";
       const tags = Array.isArray(goods.tags) ? goods.tags.filter(Boolean).slice(0, 2) : [];
       const tagHtml = [
         ...tags,
-        goods.type === "custom" ? "可选规格" : "上架商品"
+        goods.type === "custom" ? "多规格可选" : "当季供应"
       ]
         .map((tag) => `<b>${escapeHtml(tag)}</b>`)
         .join("");
@@ -113,7 +113,7 @@ const renderCatalogPanel = (sections, activeCategory) => {
             <h4>${escapeHtml(goods.name || "深悦胜商品")}</h4>
             <p>${escapeHtml(desc)}</p>
             <div class="catalog-labels">${tagHtml}</div>
-            <a href="${miniProgramLink}">进入小程序查看</a>
+            <a href="${miniProgramLink}">查看规格与购买</a>
           </div>
         </article>
       `;
@@ -123,7 +123,7 @@ const renderCatalogPanel = (sections, activeCategory) => {
   return `
     <div class="catalog-heading">
       <h3>${escapeHtml(section.category)}</h3>
-      <p>${escapeHtml(getCategoryIntro(section.category))} 当前同步 ${section.goodsList.length} 个上架商品。</p>
+      <p>${escapeHtml(getCategoryIntro(section.category))} 共 ${section.goodsList.length} 款可选，具体库存与配送以咨询确认为准。</p>
     </div>
     <div class="catalog-products">${items}</div>
   `;
@@ -137,7 +137,7 @@ const getCategoryIntro = (category) => {
     单品加点: "适合作为刺身拼盘、日料餐桌和轻食套餐的补充。"
   };
 
-  return introMap[category] || "根据小程序后台分类同步展示。";
+    return introMap[category] || "甄选适合不同用餐场景的海鲜食材。";
 };
 
 const renderCatalog = (sections) => {
@@ -153,7 +153,7 @@ const renderCatalog = (sections) => {
         (section) => `
           <button class="${section.category === activeCategory ? "is-active" : ""}" type="button" data-catalog-category="${escapeHtml(section.category)}">
             <strong>${escapeHtml(section.category)}</strong>
-            <span>${section.goodsList.length} 个商品</span>
+            <span>${section.goodsList.length} 款可选</span>
           </button>
         `
       )
@@ -208,7 +208,7 @@ const loadCatalog = async () => {
       return;
     }
   } catch (error) {
-    // 本地静态预览没有 PHP 接口时，改读同一份商品 JSON 做展示。
+    // 本地静态预览没有 PHP 接口时，改读本地商品 JSON 做展示。
   }
 
   try {
@@ -219,7 +219,7 @@ const loadCatalog = async () => {
       return;
     }
   } catch (error) {
-    catalogShell.innerHTML = '<div class="catalog-state">暂时无法读取商品数据，请稍后刷新。</div>';
+    catalogShell.innerHTML = '<div class="catalog-state">产品目录暂时无法读取，请稍后刷新。</div>';
   }
 };
 
