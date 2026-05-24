@@ -95,8 +95,8 @@ const renderCatalogPanel = (sections, activeCategory) => {
   const items = section.goodsList
     .slice(0, 18)
     .map((goods) => {
-      const desc = goods.desc || "规格、库存和配送方式可进入微信小程序查看，或电话咨询确认。";
-      const priceText = goods.price ? `参考价 ¥${goods.price}` : "规格咨询";
+      const desc = goods.desc || "规格、配送方式和适合人数可进入微信小程序查看，或电话咨询确认。";
+      const priceText = goods.price ? `参考 ¥${goods.price}` : "咨询规格";
       const tags = Array.isArray(goods.tags) ? goods.tags.filter(Boolean).slice(0, 2) : [];
       const tagHtml = [
         ...tags,
@@ -123,7 +123,7 @@ const renderCatalogPanel = (sections, activeCategory) => {
   return `
     <div class="catalog-heading">
       <h3>${escapeHtml(section.category)}</h3>
-      <p>${escapeHtml(getCategoryIntro(section.category))} 共 ${section.goodsList.length} 款可选，具体库存与配送以咨询确认为准。</p>
+      <p>${escapeHtml(getCategoryIntro(section.category))} 已为你整理 ${section.goodsList.length} 款选择，具体规格与配送可继续咨询确认。</p>
     </div>
     <div class="catalog-products">${items}</div>
   `;
@@ -133,7 +133,7 @@ const getCategoryIntro = (category) => {
   const introMap = {
     双人轻享: "适合少量尝鲜、双人晚餐和日常刺身加餐。",
     家庭轻宴: "适合家庭聚餐、朋友小聚和周末餐桌。",
-    宴请拼盘: "适合多人宴请、节日聚会和企业礼赠场景。",
+    宴请拼盘: "适合多人宴请、节日聚会和礼赠场景。",
     单品加点: "适合作为刺身拼盘、日料餐桌和轻食套餐的补充。"
   };
 
@@ -208,7 +208,7 @@ const loadCatalog = async () => {
       return;
     }
   } catch (error) {
-    // 本地静态预览没有 PHP 接口时，改读本地商品 JSON 做展示。
+    // Local preview falls back to bundled product data when the live product API is unavailable.
   }
 
   try {
@@ -219,7 +219,7 @@ const loadCatalog = async () => {
       return;
     }
   } catch (error) {
-    catalogShell.innerHTML = '<div class="catalog-state">产品目录暂时无法读取，请稍后刷新。</div>';
+    catalogShell.innerHTML = '<div class="catalog-state">产品暂时没有加载出来，请稍后刷新或直接联系我们。</div>';
   }
 };
 
